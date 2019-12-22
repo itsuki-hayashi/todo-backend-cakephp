@@ -58,6 +58,10 @@ return [
              * You can use a DSN string to set the entire configuration
              */
             'url' => env('DATABASE_URL', null),
+            /*
+             * This is required for the columns names contains keywords to work.
+             */
+            'quoteIdentifiers' => true,
         ],
 
         /*
