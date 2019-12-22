@@ -59,6 +59,11 @@ $routes->scope('/', function (RouteBuilder $builder) {
 
     $builder->get('/', 'Todos::getAll');
     $builder->get('/{id}', 'Todos::get')->setPatterns(['id' => '[0-9]+'])->setPass(['id']);
+    $builder->post('/', 'Todos::create');
+    $builder->patch('/{id}', 'Todos::modify')->setPatterns(['id' => '[0-9]+'])->setPass(['id']);
+    $builder->delete('/', 'Todos::deleteAll');
+    $builder->delete('/{id}', 'Todos::delete')->setPatterns(['id' => '[0-9]+'])->setPass(['id']);
+
 
     /*
      * Connect catchall routes for all controllers.

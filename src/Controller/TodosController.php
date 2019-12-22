@@ -2,23 +2,40 @@
 declare(strict_types=1);
 namespace App\Controller;
 use Cake\Http\Response;
-use Cake\ORM\TableRegistry;
-
+/**
+ * @property \Cake\Datasource\RepositoryInterface $Todos
+ */
 class TodosController extends AppController {
+
     public function getAll(): Response
     {
-        $todos = TableRegistry::getTableLocator()->get('Todos');
+        $todos = $this->Todos->find()->all();
         $response = $this->response->withType('application/json')
-            ->withStringBody(json_encode($todos->find()));
+            ->withStringBody(json_encode($todos, JSON_UNESCAPED_SLASHES));
         return $response;
     }
 
     public function get(string $id): Response
     {
-        $todos = TableRegistry::getTableLocator()->get('Todos');
+        $todo = $this->Todos->get($id);
         $response = $this->response->withType('application/json')
-            ->withStringBody(json_encode($todos->findById($id)->first()));
+            ->withStringBody(json_encode($todo, JSON_UNESCAPED_SLASHES));
         return $response;
+    }
+
+    public function create(): Response
+    {
+        $todos = TableRegistry::getTableLocator()->get('Todos');
+
+    }
+
+    public function deleteAll(): Response
+    {
+        $rowDeleted = $this->Todos->deleteAll();
+    }
+    public function delete(string $id): Response
+    {
+        $rowDeleted = $this->Todos->deleteAll(['id' => $id]);
     }
 
 }
