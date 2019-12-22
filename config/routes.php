@@ -57,17 +57,8 @@ $routes->scope('/', function (RouteBuilder $builder) {
      */
     $builder->applyMiddleware('csrf');
 
-    /*
-     * Here, we are connecting '/' (base path) to a controller called 'Pages',
-     * its action called 'display', and we pass a param to select the view file
-     * to use (in this case, templates/Pages/home.php)...
-     */
-    $builder->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
-
-    /*
-     * ...and connect the rest of 'Pages' controller's URLs.
-     */
-    $builder->connect('/pages/*', ['controller' => 'Pages', 'action' => 'display']);
+    $builder->get('/', 'Todos::getAll');
+    $builder->get('/{id}', 'Todos::get')->setPatterns(['id' => '[0-9]+'])->setPass(['id']);
 
     /*
      * Connect catchall routes for all controllers.
@@ -83,7 +74,7 @@ $routes->scope('/', function (RouteBuilder $builder) {
      * routes you want in your application.
      */
     $builder->fallbacks();
-});
+})->setExtensions(['json']);
 
 /*
  * If you need a different set of middleware or none at all,
