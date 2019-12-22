@@ -25,17 +25,28 @@ class TodosController extends AppController {
 
     public function create(): Response
     {
-        $todos = TableRegistry::getTableLocator()->get('Todos');
-
+        $jsonData = $this->request->input('json_decode');
+        $todo = $this->Todos->newEntities($jsonData);
+        $this->Todos->save($todo);
+        return $this->getAll();
     }
 
     public function deleteAll(): Response
     {
         $rowDeleted = $this->Todos->deleteAll();
+        return $this->getAll();
     }
     public function delete(string $id): Response
     {
         $rowDeleted = $this->Todos->deleteAll(['id' => $id]);
+        return $this->getAll();
+    }
+    public function modify(string $id): Response {
+        $todo = $this->Todos->get($id);
+        $jsonData = $this->request->input('json_decode');
+        $this->Todos->patchEntities($todo, $jsonData);
+        $this->Todos->save($todo);
+        return $this->getAll();
     }
 
 }
