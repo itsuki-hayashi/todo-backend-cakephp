@@ -55,7 +55,7 @@ $routes->scope('/', function (RouteBuilder $builder) {
      * Apply a middleware to the current route scope.
      * Requires middleware to be registered through `Application::routes()` with `registerMiddleware()`
      */
-    $builder->applyMiddleware('csrf');
+    // $builder->applyMiddleware('csrf');
 
     $builder->get('/', 'Todos::getAll');
     $builder->get('/{id}', 'Todos::get')->setPatterns(['id' => '[0-9]+'])->setPass(['id']);
