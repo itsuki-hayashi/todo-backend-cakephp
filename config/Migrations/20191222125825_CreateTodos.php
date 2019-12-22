@@ -16,9 +16,11 @@ class CreateTodos extends AbstractMigration
     {
         $tables = $this->table('todos');
         $tables->addColumn(
-            'title', 'string'
+            'title', 'string', ['encoding' => 'utf8mb4']
         )->addColumn(
             'completed', 'boolean'
+        )->addColumn(
+            'order', 'integer'
         )->addColumn(
             'created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP']
         )->addColumn(
