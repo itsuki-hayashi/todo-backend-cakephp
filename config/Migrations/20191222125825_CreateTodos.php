@@ -12,7 +12,7 @@ class CreateTodos extends AbstractMigration
      * https://book.cakephp.org/4/en/phinx/migrations.html#the-change-method
      * @return void
      */
-    public function change()
+    public function change(): void
     {
         $tables = $this->table('todos');
         $tables->addColumn(
