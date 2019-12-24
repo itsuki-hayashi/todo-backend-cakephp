@@ -39,7 +39,7 @@ return [
             /**
              * You can use a DSN string to set the entire configuration
              */
-            'url' => env('CLEARDB_DATABASE_URL'),
+            'url' => env('CLEARDB_DATABASE_URL', null),
             'quoteIdentifiers' => true
         ]
     ]
