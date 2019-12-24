@@ -16,7 +16,9 @@
         "cakephp/migrations": "^3.0",
         "cakephp/plugin-installer": "^1.0",
         "mobiledetect/mobiledetectlib": "2.*",
-        "ext-json": "*"
+        "ext-intl": "*",
+        "ext-json": "*",
+        "ext-mbstring": "*"
     },
     "require-dev": {
         "cakephp/bake": "^2.0",
