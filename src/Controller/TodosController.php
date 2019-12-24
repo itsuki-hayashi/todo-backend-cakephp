@@ -2,7 +2,6 @@
 declare(strict_types=1);
 
 namespace App\Controller;
-
 use Cake\Http\Response;
 
 /**
@@ -10,40 +9,40 @@ use Cake\Http\Response;
  */
 class TodosController extends AppController
 {
+    public function options(): Response
+    {
+        $response = $this->response->withStatus(200);
+        return $response;
+    }
 
     public function getAll(): Response
     {
         $todos = $this->Todos->find()->all();
-        $response = $this->response->withType('application/json')
-            ->withStringBody(json_encode($todos, JSON_UNESCAPED_SLASHES));
-        return $response;
+        return $this->responseWithJson($todos);
     }
 
     public function get(string $id): Response
     {
         $todo = $this->Todos->get($id);
-        $response = $this->response->withType('application/json')
-            ->withStringBody(json_encode($todo, JSON_UNESCAPED_SLASHES));
-        return $response;
+        return $this->responseWithJson($todo);
     }
 
     public function create(): Response
     {
         $jsonData = $this->request->input('json_decode', true);
-        $todo = $this->Todos->newEntity($jsonData);
-        $this->Todos->save($todo);
-        return $this->getAll();
+        $todo = $this->Todos->save($this->Todos->newEntity($jsonData));
+        return $this->responseWithJson($this->Todos->get($todo->id));
     }
 
     public function deleteAll(): Response
     {
-        $rowDeleted = $this->Todos->deleteAll();
+        $this->Todos->deleteAll([]);
         return $this->getAll();
     }
 
     public function delete(string $id): Response
     {
-        $rowDeleted = $this->Todos->deleteAll(['id' => $id]);
+        $this->Todos->deleteAll(['id' => $id]);
         return $this->getAll();
     }
 
@@ -52,8 +51,14 @@ class TodosController extends AppController
         $todo = $this->Todos->get($id);
         $jsonData = $this->request->input('json_decode', true);
         $this->Todos->patchEntity($todo, $jsonData);
-        $this->Todos->save($todo);
-        return $this->getAll();
+        return $this->responseWithJson($this->Todos->save($todo));
     }
 
+    private function responseWithJson($value): Response
+    {
+        return $this
+            ->response
+            ->withType('application/json')
+            ->withStringBody(json_encode($value, JSON_UNESCAPED_SLASHES));
+    }
 }

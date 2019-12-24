@@ -63,7 +63,7 @@ $routes->scope('/', function (RouteBuilder $builder) {
     $builder->patch('/{id}', 'Todos::modify')->setPatterns(['id' => '[0-9]+'])->setPass(['id']);
     $builder->delete('/', 'Todos::deleteAll');
     $builder->delete('/{id}', 'Todos::delete')->setPatterns(['id' => '[0-9]+'])->setPass(['id']);
-
+    $builder->options('/*', 'Todos::options');
 
     /*
      * Connect catchall routes for all controllers.

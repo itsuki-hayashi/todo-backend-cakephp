@@ -5,23 +5,26 @@ namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
 
-class Todo extends Entity {
+class Todo extends Entity
+{
     protected $_hidden = ['created_at', 'updated_at'];
     protected $_virtual = ['url'];
+
     protected function _getUrl(): string
     {
-        return  self::getBaseUrl().'/'. $this->id;
+        return self::getBaseUrl() . '/' . $this->id;
     }
 
-    private static function  getBaseUrl(){
+    private static function getBaseUrl()
+    {
 
-    // output: localhost
-    $hostName = $_SERVER['HTTP_HOST'];
+        // output: localhost
+        $hostName = $_SERVER['HTTP_HOST'];
 
-    // output: http://
-    $protocol = strtolower(substr($_SERVER["SERVER_PROTOCOL"],0,5))=='https://'?'https://':'http://';
+        // output: http://
+        $protocol = strtolower(substr($_SERVER["SERVER_PROTOCOL"], 0, 5)) == 'https://' ? 'https://' : 'http://';
 
-    // return: http://localhost/myproject/
-    return $protocol.$hostName;
-}
+        // return: http://localhost/myproject/
+        return $protocol . $hostName;
+    }
 }
